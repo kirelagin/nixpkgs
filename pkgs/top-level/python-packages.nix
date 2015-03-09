@@ -13509,6 +13509,26 @@ let
     };
   };
 
+  scrypt = buildPythonPackage rec {
+    name = "scrypt-0.6.1";
+
+    src = pkgs.fetchurl {
+      url = "https://pypi.python.org/packages/source/s/scrypt/${name}.tar.gz";
+      sha256 = "0yx06icc0q9w7h08i4cqv1gk3y0vz7gn2zpla4mbsjb6g2gvnhk1";
+    };
+
+    buildInputs = [ pkgs.openssl ];
+
+    # `import _scrypt` fails
+    doCheck = false;
+
+    meta = with stdenv.lib; {
+      description = "This is a set of Python bindings for the scrypt key derivation function";
+      homepage = http://bitbucket.org/mhallin/py-scrypt;
+      license = licenses.bsd2;
+    };
+  };
+
 
 # python2.7 specific packages
 } // optionalAttrs isPy27 (
