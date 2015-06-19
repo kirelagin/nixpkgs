@@ -1,4 +1,4 @@
-{stdenv, fetchgit, xproto, libX11, enableXft, libXft}:
+{stdenv, fetchgit, xproto, libX11, enableXft, libXft, userPatches ? []}:
 
 with stdenv.lib;
 
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     sha256 = "0c5ayf1lrb1xiz5h8dfd4mh05kas42zzi5m5ylrvl67sfz3z4wg1";
   };
 
-  patches = optional enableXft ./xft.patch;
+  patches = optional enableXft ./xft.patch ++ userPatches;
 
   buildInputs = [ xproto libX11 ] ++ optional enableXft libXft;
 
