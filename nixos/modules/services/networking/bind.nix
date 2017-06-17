@@ -158,5 +158,8 @@ in
       script = "${pkgs.bind.out}/sbin/named -u ${bindUser} ${optionalString cfg.ipv4Only "-4"} -c ${cfg.configFile} -f";
       unitConfig.Documentation = "man:named(8)";
     };
+
+    networking.firewall.allowedUDPPorts = [ 53 ];
+    networking.firewall.allowedTCPPorts = [ 53 ];
   };
 }
