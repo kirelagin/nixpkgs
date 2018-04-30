@@ -158,7 +158,10 @@ let
   ghcEnv = ghc.withPackages (p: haskellBuildInputs);
 
   setup = buildHaskellPackages.mkSetup {
-    inherit pname version src setupHaskellDepends;
+    inherit pname version src setupHaskellDepends
+            preCompileBuildDriver postCompileBuildDriver
+            preUnpack postUnpack
+            patches patchPhase prePatch postPatch;
   };
   setupCommand = "${setup}/Setup";
 

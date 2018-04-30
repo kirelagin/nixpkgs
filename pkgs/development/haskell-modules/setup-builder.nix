@@ -4,6 +4,9 @@
 , version
 , src
 , setupHaskellDepends
+, preCompileBuildDriver ? "", postCompileBuildDriver ? ""
+, preUnpack ? "", postUnpack ? ""
+, patches ? [], patchPhase ? "", prePatch ? "", postPatch ? ""
 }:
 
 let
@@ -33,7 +36,11 @@ stdenv.mkDerivation {
   nativeBuildInputs = [ ghc ];
   buildInputs = setupHaskellDepends;
 
-  phases = [ "unpackPhase" "compileBuildDriverPhase" ];
+  inherit preCompileBuildDriver postCompileBuildDriver
+          preUnpack postUnpack
+          patches patchPhase prePatch postPatch;
+
+  phases = [ "unpackPhase" "patchPhase" "compileBuildDriverPhase" ];
 
   compileBuildDriverPhase = ''
     echo "Build with ${ghc}."
@@ -53,7 +60,7 @@ stdenv.mkDerivation {
     echo setupCompileFlags: $setupCompileFlags
 
     mkdir -p "$out"
-    ${ghcCommand} $setupCompileFlags --make -o "$out/Setup" -odir $TMPDIR -hidir $TMPDIR $i
+    "${ghcCommand}" "$i" $setupCompileFlags --make -o "$out/Setup" -odir "$TMPDIR" -hidir "$TMPDIR"
 
     runHook postCompileBuildDriver
   '';
