@@ -24202,6 +24202,7 @@ in
   xdg_utils = callPackage ../tools/X11/xdg-utils {
     w3m = w3m-batch;
   };
+  xdg-utils = xdg_utils;
 
   xdgmenumaker = callPackage ../applications/misc/xdgmenumaker { };
 

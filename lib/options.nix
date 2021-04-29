@@ -6,6 +6,10 @@ with lib.lists;
 with lib.attrsets;
 with lib.strings;
 
+let
+  inherit (lib.types) mkOptionType;
+in
+
 rec {
 
   /* Returns true when the given argument is an option
