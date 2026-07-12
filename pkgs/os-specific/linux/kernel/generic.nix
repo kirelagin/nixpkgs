@@ -96,6 +96,8 @@ lib.makeOverridable (
     buildPackages ? args'.buildPackages,
     pkgsBuildBuild ? args'.pkgsBuildBuild,
 
+    builderArgsOverride ? (_: { }),
+
     ...
   }@args:
 
@@ -317,7 +319,7 @@ lib.makeOverridable (
     );
 
   in
-  kernel.overrideAttrs (
+  (kernel.override builderArgsOverride).overrideAttrs (
     finalAttrs: previousAttrs: {
 
       passthru =
